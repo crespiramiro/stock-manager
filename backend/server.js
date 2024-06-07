@@ -30,7 +30,7 @@ class Server {
     }
 
     routes(){
-        this.app.use(this.productsPath, require('../routes/productRoutes.js'));
+        this.app.use(this.productsPath, require('./routes/productRoutes.js'));
     }
 
 listen() {
