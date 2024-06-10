@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const dbConnection = require('../database/database.js');
+const dbConnection = require('./database/database.js');
 
 class Server {
     constructor(){
