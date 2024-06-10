@@ -10,7 +10,7 @@ const {
   productsPut,
   productsDelete,
   getProductsByCategory
-} = require("../controllers/products");
+} = require("../controllers/product");
 
 router.get("/", productsGet);
 
