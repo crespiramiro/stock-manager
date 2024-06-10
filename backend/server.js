@@ -1,3 +1,4 @@
+require('dotenv').config(); // Agrega esta línea al principio del archivo
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -6,7 +7,7 @@ const dbConnection = require('./database/database.js');
 class Server {
     constructor(){
         this.app = express();
-        this.port = 8080;
+        this.port = process.env.PORT;
         this.productsPath = '/api/products';
 
         this.middlewares();

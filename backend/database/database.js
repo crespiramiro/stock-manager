@@ -1,8 +1,9 @@
-const mongoose = require('mongoose')
+require('dotenv').config(); // Agrega esta línea al principio del archivo
+const mongoose = require('mongoose');
 
 const dbConnection = async () => {
     try {
-        await mongoose.connect('mongodb+srv://crespiramiro:gZFlwA3VzThZF2Bw.@cluster0.mob9ktw.mongodb.net/', { // URI directamente especificada aquí
+        await mongoose.connect(process.env.MONGODB_URI, { // Usa la variable de entorno para la cadena de conexión
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
