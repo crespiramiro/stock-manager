@@ -1,15 +1,27 @@
-const express = require('express');
-const router = express.Router();
-const { registerUser } = require('../controllers/userController');
+const { Router } = require("express");
 
-// Ruta para registrar un nuevo usuario
-router.post('/signup', registerUser);
+const router = Router();
 
-// login route
-router.post('/login', loginUser);
+const { body } = require('express-validator');
 
-// Ruta para cerrar sesión
-router.post('/logout', logoutUser);
+const {
+    getUsers,
+    registerUser,
+    loginUser,
+    logoutUser
+} = require("../controllers/user")
+
+//get users
+router.get('/', getUsers)
+
+// // Ruta para registrar un nuevo usuario
+// router.post('/signup', registerUser);
+
+// // login route
+// router.post('/login', loginUser);
+
+// // Ruta para cerrar sesión
+// router.post('/logout', logoutUser);
 
 
 
