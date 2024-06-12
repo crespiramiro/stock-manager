@@ -10,6 +10,8 @@ class Server {
         this.port = process.env.PORT;
         this.productsPath = '/api/products';
         this.usersPath = '/api/users';
+        this.authPath = '/api/auth'
+        this.loginPath = '/api/login'
 
         this.middlewares();
         this.routes();
@@ -35,6 +37,8 @@ class Server {
     routes(){
         this.app.use(this.productsPath, require('./routes/productRoutes.js'));
         this.app.use(this.usersPath, require('./routes/userRoute.js'));
+        this.app.use(this.authPath, require('./routes/auth.js'));
+        this.app.use(this.loginPath, require('./routes/auth.js'));
         }
 
 listen() {
