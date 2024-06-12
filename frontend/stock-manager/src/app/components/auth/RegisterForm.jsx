@@ -23,6 +23,10 @@ export default function RegisterForm() {
       const result = await response.json();
       console.log('User registered:', result);
       // Redirect to login page or another page after successful registration
+
+      
+
+
     } catch (error) {
       setServerError(error.message);
       console.error('Error registering user:', error);

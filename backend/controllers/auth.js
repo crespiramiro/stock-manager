@@ -23,11 +23,11 @@ const register = async (req,res) => {
 
 const login = async (req,res) => {
     try{
-    const {email,password} = req.body;
-    const user = await User.findOne({email});
+    const {username, email,password} = req.body;
+    const user = await User.findOne({email, username});
 
     if (!user) {
-        res.status(400).json({message: "wrong email"})
+        res.status(400).json({message: "wrong email or username"})
     }
 
     const comparePassword = bcrypt.compareSync(password, user.password); // boolean
