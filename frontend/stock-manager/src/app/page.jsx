@@ -1,9 +1,11 @@
+import Register from "./components/Register";
+
 
 
 export default function Home() {
   return (
-    <main>
-
+    <main className="flex min-h-screen w-screen " >
+        <Register />
     </main>
   );
 }
