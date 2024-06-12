@@ -4,25 +4,17 @@ const router = Router();
 
 const { body } = require('express-validator');
 
+const jwtValidate = require('../middlewares/jwValidate')
+
 const {
     getUsers,
     registerUser,
     loginUser,
     logoutUser
-} = require("../controllers/user")
+} = require("../controllers/user");
 
 //get users
-router.get('/', getUsers)
-
-// // Ruta para registrar un nuevo usuario
-// router.post('/signup', registerUser);
-
-// // login route
-// router.post('/login', loginUser);
-
-// // Ruta para cerrar sesión
-// router.post('/logout', logoutUser);
-
+router.get('/', jwtValidate, getUsers);
 
 
 module.exports = router;
