@@ -1,11 +1,12 @@
 'use client'
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import {useRouter} from "next/navigation"
 
 export default function LoginForm() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-
+    const router = useRouter();
     const [serverError, setServerError] = useState('');
 
     const onSubmit = async (data) => {
@@ -25,8 +26,14 @@ export default function LoginForm() {
       
             const result = await response.json();
             console.log('Logged In:', result);
-            // Redirect to login page or another page after successful registration
-      
+
+             // Guardar el token en localStorage
+             localStorage.setItem('token', result.token);
+
+              // Redirigir al dashboard
+            setTimeout(() => {
+              router.push('/dashboard');
+          }, 2000); // 2 segundos de retraso
             
       
       
