@@ -5,6 +5,8 @@ import {useForm} from "react-hook-form";
 export default function RegisterForm({onSuccess }) {
 
   const [successMessage, setSuccessMessage] = useState('');
+  const {register, formState:{errors}, handleSubmit, setError} = useForm();
+  const [serverErrors, setServerErrors] = useState([]);
   
   const onSubmit = async (data) => {
     try {
@@ -17,8 +19,15 @@ export default function RegisterForm({onSuccess }) {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to register user');
+          const result = await response.json();
+          if (result.errors) {
+            result.errors.forEach(error => {
+              setError(error.path, { type: 'server', message: error.msg });
+            });
+          }
+          throw new Error('Failed to register user');
         }
+  
 
         const result = await response.json();
         console.log('User registered:', result);
@@ -32,11 +41,10 @@ export default function RegisterForm({onSuccess }) {
       }, 2000); // 2 segundos de retraso
 
     } catch (error) {
-        console.error('Error registering user:', error);
+      console.error('Error:', error);
+      setServerErrors([...serverErrors, error.message]);
     }
-};
-
-  const {register, formState:{errors}, handleSubmit} = useForm();
+  };
 
     return (
         <form className="p-8 flex flex-col" onSubmit={handleSubmit(onSubmit)}  noValidate >
@@ -50,7 +58,7 @@ export default function RegisterForm({onSuccess }) {
 
       <div className="mb-4 email ">
         <label htmlFor="email" className=" text-sm font-medium text-gray-700">Email</label>
-        <input type="email" autoComplete="email" {...register("email", { required: 'Email is required', pattern: { value: /^\S+@\S+$/i,  message: 'Enter a valid email address' } })}  placeholder="enter youre email" id="email" name="email" className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
+        <input type="email" autoComplete="email" {...register("email", { required: 'Email is required', pattern: { value: /^\S+@\S+$/i,  message: 'Enter a valid email address' } })}  placeholder="enter your email" id="email" name="email" className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
         {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
       </div>
 

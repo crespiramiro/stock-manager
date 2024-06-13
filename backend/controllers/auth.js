@@ -9,15 +9,13 @@ const register = async (req,res) => {
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(password, salt);
 
-        // const newUser = {...req.body, password: hashedPassword}
-
         const newUser = new User({username, password: hashedPassword, email})
 
         await newUser.save();
         res.status(201).json({user: newUser, message: "user created succesfully"})
     } catch(error){
-        console.log("error registering user" + error.message );
-        res.status(500).json({message: 'error registering user'})
+        console.log("failed to register user" + error.message );
+        res.status(500).json({message: 'failed to register user'})
     }
 };
 
