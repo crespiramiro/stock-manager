@@ -49,5 +49,29 @@ router.post(
     },
     auth.register
   );
+
+  router.post(
+    '/login',
+    [
+        body('email')
+            .notEmpty().withMessage('Email is required')
+            .isEmail().withMessage('Enter a valid email address'),
+        body('password')
+            .notEmpty().withMessage('Password is required')
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            await auth.login(req, res);
+        } catch (err) {
+            res.status(500).json({ errors: [{ msg: err.message }] });
+        }
+    }
+);
+
   
   module.exports = router;

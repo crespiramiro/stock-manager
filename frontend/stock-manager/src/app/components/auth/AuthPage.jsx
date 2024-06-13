@@ -23,7 +23,7 @@ export default function AuthPage() {
                 >
                     {showLogin ? 'Sign Up' : 'Log In'}
                 </button>
-                {showLogin ? <LoginForm /> : <RegisterForm onSuccess={handleSuccessRegistration} />}
+                {showLogin ? <LoginForm onSuccess={handleSuccessRegistration} /> : <RegisterForm onSuccess={handleSuccessRegistration} />}
             </section>
         </section>
     );

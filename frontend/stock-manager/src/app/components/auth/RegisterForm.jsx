@@ -2,7 +2,7 @@
 import { useState } from "react";
 import {useForm} from "react-hook-form";
 
-export default function RegisterForm({onSuccess }) {
+export default function RegisterForm({ onSuccess }) {
 
   const [successMessage, setSuccessMessage] = useState('');
   const {register, formState:{errors}, handleSubmit, setError} = useForm();
