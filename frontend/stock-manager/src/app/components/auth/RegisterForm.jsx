@@ -2,36 +2,39 @@
 import { useState } from "react";
 import {useForm} from "react-hook-form";
 
-export default function RegisterForm() {
+export default function RegisterForm({onSuccess }) {
 
-  const [serverError, setServerError] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState('');
+  
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
+        const response = await fetch('http://localhost:8080/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to register user');
-      }
+        if (!response.ok) {
+            throw new Error('Failed to register user');
+        }
 
-      const result = await response.json();
-      console.log('User registered:', result);
-      // Redirect to login page or another page after successful registration
+        const result = await response.json();
+        console.log('User registered:', result);
 
-      
+        // show success message
+        setSuccessMessage('User registered successfully! Redirecting to login...');
 
+        // Llamar a la función onSuccess pasada como prop
+        setTimeout(() => {
+          onSuccess();
+      }, 2000); // 2 segundos de retraso
 
     } catch (error) {
-      setServerError(error.message);
-      console.error('Error registering user:', error);
+        console.error('Error registering user:', error);
     }
-  };
+};
 
   const {register, formState:{errors}, handleSubmit} = useForm();
 
@@ -58,7 +61,9 @@ export default function RegisterForm() {
       </div>
 
       <button type="submit" className="w-full py-2 px-4 bg-emerald-600 text-white rounded-md hover:bg-emerald-700">Sign Up</button>
-      </form>
+      
+      {successMessage && <div className="mt-4 text-green-500">{successMessage}</div>}
+        </form>
       );
 };
 
