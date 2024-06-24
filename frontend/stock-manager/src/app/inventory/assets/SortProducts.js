@@ -17,7 +17,13 @@ const sortProducts = (products, sortBy) => {
       case 'nameAZ':
         sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      default:
+        case 'dateAsc':
+          sortedProducts.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+          break;
+        case 'dateDesc':
+          sortedProducts.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+          break;
+        default:
         break;
     }
   

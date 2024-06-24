@@ -55,7 +55,7 @@ export const TableComponent = () => {
             <Badge size="sm" color="secondary"><nav>number of products</nav></Badge>
           </div>
           <div>
-          <DropdownComponent  handleSortChange={handleSortChange} />
+          <DropdownComponent sortBy={sortBy} handleSortChange={handleSortChange} />
       </div>
           <div className="flex items-center gap-5">
             <Button variant="outline" size="sm">

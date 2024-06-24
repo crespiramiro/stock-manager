@@ -9,7 +9,9 @@ const DropdownComponent = ({ handleSortChange }) => {
     { value: 'priceHighest', label: 'Price (Highest first)' },
     { value: 'stockLowest', label: 'Stock (Lowest first)' },
     { value: 'stockHighest', label: 'Stock (Highest first)' },
-    { value: 'nameAZ', label: 'Name (A-Z)' }
+    { value: 'nameAZ', label: 'Name (A-Z)' },
+    { value: 'dateAsc', label: 'Date (Ascending)' },
+    { value: 'dateDesc', label: 'Date (Descending)' },
   ];
 
   const toggleDropdown = () => {
