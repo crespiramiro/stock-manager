@@ -32,6 +32,11 @@ export const TableComponent = () => {
     getProducts();
   }, []); // La dependencia vacía [] indica que se ejecutará una sola vez al montar el componente
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
   return (
     <Table hoverable={true} showBorder={true}
     showCheckbox={true}>
@@ -106,7 +111,7 @@ export const TableComponent = () => {
               <div className="flex items-center gap-1">
                 <Badge color="secondary">
                   <Clock size={18} />
-                  <span className="px-2">{product.updatedAt}</span>
+                  <span className="px-2">{formatDate(product.updatedAt)}</span>
                 </Badge>
               </div>
             </Table.Cell>
