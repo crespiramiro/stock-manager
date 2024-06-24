@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react"
-import { IoIosSearch } from "react-icons/io";
+import { MagnifyingGlass } from "phosphor-react";
 
 export default function Searchbar () {
     const [searchQuery, setSearchQuery] = useState('');
@@ -26,7 +26,7 @@ export default function Searchbar () {
           className="py-2 px-2 pr-20 rounded-lg border-opacity-50 border-2 text-black"
         />
         <button type="submit" className="px-4" >
-          <IoIosSearch size={24} />
+          <MagnifyingGlass size={24} />
         </button>
       </form>
 

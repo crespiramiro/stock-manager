@@ -1,5 +1,5 @@
 import Slidebar from "../dashboard/Slidebar"
-import { TableComponent } from "./assets/TableComponent"
+import { TableComponent } from "./TableComponent"
 export default function Inventory() {
 
     return( 

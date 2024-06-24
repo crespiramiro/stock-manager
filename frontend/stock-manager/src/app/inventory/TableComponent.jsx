@@ -1,12 +1,12 @@
 "use client";
-import { FaDollarSign } from "react-icons/fa";
-import { IoIosSearch } from "react-icons/io";
 import { Avatar, Badge, Button, Popover, Table } from "keep-react";
-import { ArrowDown, Cube, DotsThreeOutline, Pencil, Trash, FileSearch, Clock } from "phosphor-react";
+import { ArrowDown,CurrencyDollar, MagnifyingGlass, Cube, DotsThreeOutline, Pencil, Trash, FileSearch, Clock } from "phosphor-react";
 import { useEffect, useState } from "react";
+import sortProducts from "./assets/SortProducts";
 
 export const TableComponent = () => {
   const [products, setProducts] = useState([]);
+  const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
 
   const getProducts = async () => {
     try {
@@ -28,9 +28,16 @@ export const TableComponent = () => {
     }
   };
 
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  // Obtener productos ordenados utilizando sortProducts
+  const sortedProducts = sortProducts(products, sortBy);
+
   useEffect(() => {
     getProducts();
-  }, []); // La dependencia vacía [] indica que se ejecutará una sola vez al montar el componente
+  }, [sortBy]); // La dependencia vacía [] indica que se ejecutará una sola vez al montar el componente
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -46,6 +53,16 @@ export const TableComponent = () => {
             <p className="text-body-1 font-semibold text-metal-600">Products</p>
             <Badge size="sm" color="secondary"><nav>number of products</nav></Badge>
           </div>
+          <div>
+        <label htmlFor="sortSelect">Sort by:</label>
+        <select id="sortSelect" value={sortBy} onChange={handleSortChange}>
+          <option value="priceLowest">Price (Lowest first)</option>
+          <option value="priceHighest">Price (Highest first)</option>
+          <option value="stockLowest">Stock (Lowest first)</option>
+          <option value="stockHighest">Stock (Highest first)</option>
+          <option value="nameAZ">Name (A-Z)</option>
+        </select>
+      </div>
           <div className="flex items-center gap-5">
             <Button variant="outline" size="sm">
               <span className="pr-2">
@@ -55,7 +72,7 @@ export const TableComponent = () => {
             </Button>
             <Button variant="outline" size="sm">
               <span className="pr-2">
-                <IoIosSearch size={24} />
+                <MagnifyingGlass size={24} />
               </span>
               Search
             </Button>
@@ -72,7 +89,7 @@ export const TableComponent = () => {
         <Table.HeadCell className="min-w-[130px]">Updated At</Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-gray-25 divide-y">
-        {products.map((product) => (
+        {sortedProducts.map((product) => (
           <Table.Row key={product._id} className="bg-white">
             <Table.Cell>
               {/* Renderizar el nombre del producto y más detalles si es necesario */}
@@ -90,7 +107,7 @@ export const TableComponent = () => {
             <Table.Cell>
               {/* Renderizar el precio, puedes usar un Badge o simplemente mostrar el número */}
               <Badge color="primary">
-                <FaDollarSign size={18} />
+              <CurrencyDollar size={24} />
                 <span className="px-1">{product.price}</span>
               </Badge>
             </Table.Cell>
