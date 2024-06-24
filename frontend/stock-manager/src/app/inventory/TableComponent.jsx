@@ -1,8 +1,9 @@
 "use client";
 import { Avatar, Badge, Button, Popover, Table } from "keep-react";
-import { ArrowDown,CurrencyDollar, MagnifyingGlass, Cube, DotsThreeOutline, Pencil, Trash, FileSearch, Clock } from "phosphor-react";
+import { ArrowDown,CurrencyDollar, MagnifyingGlass, Cube, DotsThreeOutline, Pencil, Trash, FileSearch, Clock, Drop } from "phosphor-react";
 import { useEffect, useState } from "react";
 import sortProducts from "./assets/SortProducts";
+import DropdownComponent from "./assets/DropDownComponent";
 
 export const TableComponent = () => {
   const [products, setProducts] = useState([]);
@@ -28,8 +29,8 @@ export const TableComponent = () => {
     }
   };
 
-  const handleSortChange = (e) => {
-    setSortBy(e.target.value);
+  const handleSortChange = (value) => {
+    setSortBy(value);
   };
 
   // Obtener productos ordenados utilizando sortProducts
@@ -54,14 +55,7 @@ export const TableComponent = () => {
             <Badge size="sm" color="secondary"><nav>number of products</nav></Badge>
           </div>
           <div>
-        <label htmlFor="sortSelect">Sort by:</label>
-        <select id="sortSelect" value={sortBy} onChange={handleSortChange}>
-          <option value="priceLowest">Price (Lowest first)</option>
-          <option value="priceHighest">Price (Highest first)</option>
-          <option value="stockLowest">Stock (Lowest first)</option>
-          <option value="stockHighest">Stock (Highest first)</option>
-          <option value="nameAZ">Name (A-Z)</option>
-        </select>
+          <DropdownComponent sortBy={sortBy} handleSortChange={handleSortChange} />
       </div>
           <div className="flex items-center gap-5">
             <Button variant="outline" size="sm">
