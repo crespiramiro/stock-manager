@@ -33,6 +33,14 @@ export const TableComponent = () => {
     setSortBy(value);
   };
 
+  const handleEditProduct = (id) => {
+    console.log(`Edit product with id ${id}`);
+  };
+
+  const handleDeleteProduct = (id) => {
+    console.log(`Delete product with id ${id}`);
+  };
+
   // Obtener productos ordenados utilizando sortProducts
   const sortedProducts = sortProducts(products, sortBy);
 
@@ -127,10 +135,14 @@ export const TableComponent = () => {
               </div>
             </Table.Cell>
             <Table.Cell>
-              {/* Botón de opciones */}
-              <Button variant="outline" size="sm" shape="circle">
-                <DotsThreeOutline size={15} />
-              </Button>
+              <div className="flex items-center gap-3">
+                <button onClick={() => handleEditProduct(product._id)} className="text-purple-500 hover:text-purple-700">
+                  <Pencil size={20} />
+                </button>
+                <button onClick={() => handleDeleteProduct(product._id)} className="text-red-500 hover:text-red-700">
+                  <Trash size={20} />
+                </button>
+              </div>
             </Table.Cell>
           </Table.Row>
         ))}
