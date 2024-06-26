@@ -26,14 +26,14 @@ const productsPost =  async (req, res) => {
     description,
     category,
     price,
-    quantityInStock,
+    quantity,
     createdAt,
     updatedAt,
     managedBy,
     images,
   } = req.body;
 
-  const newProduct = new Product({name, description, category, price, quantityInStock, createdAt, updatedAt, managedBy, images})
+  const newProduct = new Product({name, description, category, price, quantity, createdAt, updatedAt, managedBy, images})
 
   await newProduct.save(); 
 

@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
+import { ModalComponent } from "./ModalComponent";
 
 const EditProductModal = ({ product, onSave, onClose }) => {
   const [formData, setFormData] = useState({
@@ -54,29 +55,7 @@ const EditProductModal = ({ product, onSave, onClose }) => {
   };
 
   return (
-    <div>
-      <h2>Edit Product</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Price:</label>
-          <input type="text" name="price" value={formData.price} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Quantity:</label>
-          <input type="text" name="quantity" value={formData.quantity} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Category:</label>
-          <input type="text" name="category" value={formData.category} onChange={handleChange} />
-        </div>
-        <button type="submit">Save</button>
-        <button type="button" onClick={onClose}>Cancel</button>
-      </form>
-    </div>
+   <ModalComponent />
   );
 };
 

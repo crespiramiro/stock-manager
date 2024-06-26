@@ -6,6 +6,7 @@ import sortProducts from "./assets/SortProducts";
 import DropdownComponent from "./assets/DropDownComponent";
 import { useProductActions } from "./assets/ProductActions";
 import EditProductModal from "./assets/EditProduct";
+import { ModalComponent } from "./assets/ModalComponent";
 
 export const TableComponent = () => {
   const [products, setProducts] = useState([]);
@@ -143,7 +144,7 @@ export const TableComponent = () => {
         ))}
       </Table.Body>
       {editingProduct && (
-        <EditProductModal
+        <ModalComponent
           product={editingProduct}
           onSave={getProducts}
           onClose={() => handleEditProduct(null)}
