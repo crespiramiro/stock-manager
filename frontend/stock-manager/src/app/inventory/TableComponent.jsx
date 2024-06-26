@@ -4,10 +4,13 @@ import { ArrowDown,CurrencyDollar, MagnifyingGlass, Cube, DotsThreeOutline, Penc
 import { useEffect, useState } from "react";
 import sortProducts from "./assets/SortProducts";
 import DropdownComponent from "./assets/DropDownComponent";
+import { useProductActions } from "./assets/ProductActions";
+import EditProductModal from "./assets/EditProduct";
 
 export const TableComponent = () => {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
+  const { editingProduct, handleEditProduct, handleDeleteProduct } = useProductActions();
 
   const getProducts = async () => {
     try {
@@ -31,14 +34,6 @@ export const TableComponent = () => {
 
   const handleSortChange = (value) => {
     setSortBy(value);
-  };
-
-  const handleEditProduct = (id) => {
-    console.log(`Edit product with id ${id}`);
-  };
-
-  const handleDeleteProduct = (id) => {
-    console.log(`Delete product with id ${id}`);
   };
 
   // Obtener productos ordenados utilizando sortProducts
@@ -147,6 +142,13 @@ export const TableComponent = () => {
           </Table.Row>
         ))}
       </Table.Body>
+      {editingProduct && (
+        <EditProductModal
+          product={editingProduct}
+          onSave={getProducts}
+          onClose={() => handleEditProduct(null)}
+        />
+      )}
     </Table>
   );
 };
