@@ -9,7 +9,6 @@ export const ToastComponent = () => {
         size="sm"
         color="secondary"
         className="bg-metal-900">
-        <span>Product updated Succesfully</span>
       </Button>
       
     </div>

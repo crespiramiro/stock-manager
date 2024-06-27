@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react";
+import { toast } from "keep-react";
 
 export const useProductActions = () => {
   const [editingProduct, setEditingProduct] = useState(null);
@@ -21,7 +22,7 @@ export const useProductActions = () => {
         throw new Error('Failed to delete the product');
       }
 
-      alert('Product deleted successfully');
+      toast.success('Product deleted Succesfully')
     } catch (error) {
       console.error('Error deleting the product:', error);
       alert('Failed to delete the product');
