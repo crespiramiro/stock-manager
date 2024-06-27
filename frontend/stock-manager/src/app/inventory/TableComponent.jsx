@@ -12,6 +12,7 @@ export const TableComponent = () => {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
   const { editingProduct, handleEditProduct, handleDeleteProduct } = useProductActions();
+  const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
 
   const getProducts = async () => {
     try {
@@ -47,6 +48,16 @@ export const TableComponent = () => {
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
+  };
+
+  const openModal = (product) => {
+    handleEditProduct(product);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    handleEditProduct(null);
+    setIsOpen(false);
   };
 
   return (
@@ -131,8 +142,8 @@ export const TableComponent = () => {
               </div>
             </Table.Cell>
             <Table.Cell>
-              <div className="flex items-center gap-3">
-                <button onClick={() => handleEditProduct(product._id)} className="text-purple-500 hover:text-purple-700">
+            <div className="flex items-center gap-3">
+                <button onClick={() => openModal(product._id)} className="text-purple-500 hover:text-purple-700">
                   <Pencil size={20} />
                 </button>
                 <button onClick={() => handleDeleteProduct(product._id)} className="text-red-500 hover:text-red-700">
@@ -144,11 +155,12 @@ export const TableComponent = () => {
         ))}
       </Table.Body>
       {editingProduct && (
-        <ModalComponent
-          product={editingProduct}
-          onSave={getProducts}
-          onClose={() => handleEditProduct(null)}
-        />
+         <ModalComponent
+         product={editingProduct}
+         onSave={getProducts}
+         onClose={closeModal}
+         isOpen={isOpen} // Pasar el estado del modal
+       />
       )}
     </Table>
   );
