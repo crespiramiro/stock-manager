@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Button, Modal } from 'keep-react'
+import { Button, Modal, toast } from 'keep-react'
 import { useForm } from 'react-hook-form'
 
 
@@ -31,6 +31,10 @@ export const ModalComponent = ({ product, onSave, onClose, isOpen }) => {
     
           onSave();
           onClose();
+
+          toast.success('Product updated successfully!');
+          console.log('CONSOLA');
+
         } catch (error) {
           console.error('Error updating the product:', error);
           alert('Failed to update the product');
