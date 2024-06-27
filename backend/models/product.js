@@ -8,7 +8,7 @@ const productSchema = new Schema({
     price: { type : Number, default: 0 },
     createdAt: { type : Date, default: Date.now },
     updatedAt: { type : Date, default: Date.now },
-    managedBy: { type : String, required: true },
+    managedBy: { type : String},
     image: { type: String }
 });
 
