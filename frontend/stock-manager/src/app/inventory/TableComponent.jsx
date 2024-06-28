@@ -11,7 +11,6 @@ import { ModalComponent } from "./assets/ModalComponent";
 export const TableComponent = () => {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
-  const { editingProduct, handleEditProduct, handleDeleteProduct } = useProductActions();
   const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
 
   const getProducts = async () => {
@@ -40,6 +39,8 @@ export const TableComponent = () => {
 
   // Obtener productos ordenados utilizando sortProducts
   const sortedProducts = sortProducts(products, sortBy);
+
+  const { editingProduct, handleEditProduct, handleDeleteProduct } = useProductActions(getProducts);
 
   useEffect(() => {
     getProducts();

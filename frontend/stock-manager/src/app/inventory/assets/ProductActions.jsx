@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { toast } from "keep-react";
 
-export const useProductActions = () => {
+export const useProductActions = (getProducts) => {
   const [editingProduct, setEditingProduct] = useState(null);
 
   const handleEditProduct = (id) => {
@@ -23,6 +23,7 @@ export const useProductActions = () => {
       }
 
       toast.success('Product deleted Succesfully')
+      getProducts();
     } catch (error) {
       console.error('Error deleting the product:', error);
       alert('Failed to delete the product');
