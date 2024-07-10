@@ -5,49 +5,64 @@ import { useForm } from 'react-hook-form'
 
 
 export const ModalComponent = ({ product, onSave, onClose, isOpen }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  if (!isOpen) return null;
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
-      name: product ? product.name : "",
-      price: product ? product.price : "",
-      quantity: product ? product.quantity : "",
-      category: product ? product.category : "",
+      name: "",
+      price: "",
+      quantity: "",
+      category: "",
     }
-  });
-    
-    
-      const onSubmit = async (formData) => {
-        try {
-          const response = await fetch(`http://localhost:8080/api/products/${product}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-    
-          if (!response.ok) {
-            throw new Error('Failed to update the product');
-          }
-    
-          onSave();
-          onClose();
+  });    
 
-          toast.success('Product updated successfully!');
-          console.log('CONSOLA');
+  useEffect(() => {
+    if (product) {
+      reset({
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity,
+        category: product.category,
+      });
+    }
+  }, [product, reset]);
+    
+  const onSubmit = async (formData) => {
+    try {
+      console.log(product, "PRODUCTO");
+      const method = product ? 'PUT' : 'POST';
+      const url = product 
+        ? `http://localhost:8080/api/products/${product}`
+        : 'http://localhost:8080/api/products';
 
-        } catch (error) {
-          console.error('Error updating the product:', error);
-          alert('Failed to update the product');
-        }
-      };
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
+      if (!response.ok) {
+        throw new Error(`Failed to ${product ? 'update' : 'create'} the product`);
+      }
+
+      onSave();
+      onClose();
+
+      toast.success(`Product ${product ? 'updated' : 'saved'} successfully!`);
+    } catch (error) {
+      console.error(`Error ${product ? 'updating' : 'saving'} the product:`, error);
+      alert(`Failed to ${product ? 'update' : 'save'} the product`);
+    }
+  };
 
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <Modal.Body className="space-y-3">
         <div>
-      <h2 className='text-center font-semibold' >Edit Product</h2>
+        <h2 className="text-center font-semibold">{product ? 'Edit' : 'Add'} Product</h2>
       <form className='flex flex-col gap-y-6 items-center w-full font-medium p-3' onSubmit={handleSubmit(onSubmit)}>
           <div className='items-center w-full'>
             <input

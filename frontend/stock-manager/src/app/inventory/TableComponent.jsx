@@ -40,7 +40,7 @@ export const TableComponent = () => {
   // Obtener productos ordenados utilizando sortProducts
   const sortedProducts = sortProducts(products, sortBy);
 
-  const { editingProduct, handleEditProduct, handleDeleteProduct } = useProductActions(getProducts);
+  const { editingProduct, handleEditProduct, handleDeleteProduct, handleSaveProduct } = useProductActions(getProducts);
 
   useEffect(() => {
     getProducts();
@@ -52,13 +52,16 @@ export const TableComponent = () => {
   };
 
   const openModal = (product) => {
+    console.log('Opening modal for product:', product);
     handleEditProduct(product);
     setIsOpen(true);
+    console.log('Modal open state set to true');
   };
 
   const closeModal = () => {
     handleEditProduct(null);
     setIsOpen(false);
+    console.log('Modal open state set to false');
   };
 
   return (
@@ -74,7 +77,7 @@ export const TableComponent = () => {
           <DropdownComponent sortBy={sortBy} handleSortChange={handleSortChange} />
       </div>
           <div className="flex items-center gap-5">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" onClick={() => { console.log('Add Product button clicked'); openModal(null); }}>
               <span className="pr-2">
                 <Cube size={24} />
               </span>
@@ -155,14 +158,15 @@ export const TableComponent = () => {
           </Table.Row>
         ))}
       </Table.Body>
-      {editingProduct && (
-         <ModalComponent
-         product={editingProduct}
-         onSave={getProducts}
-         onClose={closeModal}
-         isOpen={isOpen} // Pasar el estado del modal
-       />
-      )}
+      {isOpen && (
+  <ModalComponent
+    product={editingProduct}
+    onSave={getProducts}
+    onClose={closeModal}
+    isOpen={isOpen}
+    handleSaveProduct={handleSaveProduct}
+  />
+)}
     </Table>
   );
 };

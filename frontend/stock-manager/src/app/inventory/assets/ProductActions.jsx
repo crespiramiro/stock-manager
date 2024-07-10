@@ -9,6 +9,35 @@ export const useProductActions = (getProducts) => {
     setEditingProduct(id);
   };
 
+  const handleSaveProduct = async (formData, product, onSave, onClose) => {
+    try {
+      const method = product ? 'PUT' : 'POST';
+      const url = product 
+        ? `http://localhost:8080/api/products/${product._id}`
+        : 'http://localhost:8080/api/products';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to ${product ? 'update' : 'create'} the product`);
+      }
+
+      onSave();
+      onClose();
+
+      toast.success(`Product ${product ? 'updated' : 'saved'} successfully!`);
+    } catch (error) {
+      console.error(`Error ${product ? 'updating' : 'saving'} the product:`, error);
+      alert(`Failed to ${product ? 'update' : 'save'} the product`);
+    }
+  };
+
   const handleDeleteProduct = async (id) => {
     const confirmed = window.confirm("Are you sure you want to delete this product?");
     if (!confirmed) return;
@@ -34,5 +63,6 @@ export const useProductActions = (getProducts) => {
     editingProduct,
     handleEditProduct,
     handleDeleteProduct,
+    handleSaveProduct
   };
 };
