@@ -12,6 +12,7 @@ export const TableComponent = () => {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
   const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
+  const [searchTerm, setSearchTerm] = useState('');
 
   const getProducts = async () => {
     try {
@@ -39,6 +40,15 @@ export const TableComponent = () => {
 
   // Obtener productos ordenados utilizando sortProducts
   const sortedProducts = sortProducts(products, sortBy);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = sortedProducts.filter((product) =>
+  product.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
   const { editingProduct, handleEditProduct, handleDeleteProduct, handleSaveProduct } = useProductActions(getProducts);
 
@@ -77,17 +87,22 @@ export const TableComponent = () => {
           <DropdownComponent sortBy={sortBy} handleSortChange={handleSortChange} />
       </div>
           <div className="flex items-center gap-5">
-            <Button variant="outline" size="sm" onClick={() => { console.log('Add Product button clicked'); openModal(null); }}>
+            <Button variant="outline" className="p-3" size="sm" onClick={() => { console.log('Add Product button clicked'); openModal(null); }}>
               <span className="pr-2">
                 <Cube size={24} />
               </span>
               Add Product
             </Button>
-            <Button variant="outline" size="sm">
+            <Button variant="link" size="sm" value={searchTerm} className="px-2" onChange={handleSearchChange} >
               <span className="pr-2">
                 <MagnifyingGlass size={24} />
               </span>
               Search
+              <input className="p-3 ml-1 border border-[#1b4dff] rounded-lg "
+  type="text"
+  value={searchTerm}
+  onChange={handleSearchChange}
+/>
             </Button>
           </div>
         </div>
@@ -102,7 +117,7 @@ export const TableComponent = () => {
         <Table.HeadCell className="min-w-[130px]">Updated At</Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-gray-25 divide-y">
-        {sortedProducts.map((product) => (
+        {filteredProducts.map((product) => (
           <Table.Row key={product._id} className="bg-white">
             <Table.Cell>
               {/* Renderizar el nombre del producto y más detalles si es necesario */}
