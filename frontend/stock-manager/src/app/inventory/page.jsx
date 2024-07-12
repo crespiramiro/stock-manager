@@ -2,10 +2,11 @@ import { ToastWrapper } from "keep-react"
 import Slidebar from "../dashboard/Slidebar"
 import { TableComponent } from "./TableComponent"
 import { ToastComponent } from "./assets/ToastComponent"
+import AuthGuard from "../components/AuthGuard"
 export default function Inventory() {
 
     return( 
-        
+            <AuthGuard>
         <main className="min-h-screen w-full flex flex-row " >
             <Slidebar />
             <section className="content w-full h-full  px-12 mt-4 scroll ">
@@ -28,6 +29,6 @@ export default function Inventory() {
             <TableComponent/>
             </section>
         </main>
-
+        </AuthGuard>
     )
 };

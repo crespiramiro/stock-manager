@@ -10,7 +10,7 @@ const AuthGuard = ({ children }) => {
     if (!token) {
       window.location.href = '/';
     }
-  }, [token]);
+  }, []);
 
   if (!token) {
     return null;
