@@ -4,6 +4,8 @@ const router = Router();
 
 const { body } = require('express-validator');
 
+const jwtValidate = require('../middlewares/jwValidate')
+
 const {
   productsGet,
   productsPost,
@@ -12,11 +14,12 @@ const {
   getProductsByCategory
 } = require("../controllers/product");
 
-router.get("/", productsGet);
+router.get("/",jwtValidate, productsGet);
 
-router.get('/category/:category', getProductsByCategory);
+router.get('/category/:category',jwtValidate, getProductsByCategory);
 
 router.post("/", [
+  jwtValidate,
   body('name').notEmpty().withMessage('El nombre es obligatorio'),
   body('price').isNumeric().withMessage('El precio debe ser un número válido'),
   body('quantity').notEmpty().isNumeric().withMessage('Quantity must be a valid number'),
@@ -24,12 +27,13 @@ router.post("/", [
 ], productsPost);
 
 router.put("/:id", [
+  jwtValidate,
   body('name').notEmpty().withMessage('El nombre es obligatorio'),
   body('price').notEmpty().isNumeric().withMessage('El precio debe ser un número válido'),
   body('quantity').notEmpty().isNumeric().withMessage('Stock must be a valid number'),
 
 ], productsPut);
 
-router.delete("/:id", productsDelete);
+router.delete("/:id", jwtValidate, productsDelete);
 
 module.exports = router;

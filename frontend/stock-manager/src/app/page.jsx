@@ -1,3 +1,4 @@
+import AuthGuard from "./components/AuthGuard";
 import AuthPage from "./components/auth/AuthPage";
 
 

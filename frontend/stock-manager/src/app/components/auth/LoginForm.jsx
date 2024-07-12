@@ -33,6 +33,9 @@ export default function LoginForm({ onSuccess }) {
       
             const result = await response.json();
             console.log('User logged in:', result);
+            const token = result.token;
+
+            localStorage.setItem('token', token);
       
             // Show success message
             setSuccessMessage('Logged in successfully! Redirecting...');

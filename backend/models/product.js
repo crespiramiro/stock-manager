@@ -9,7 +9,8 @@ const productSchema = new Schema({
     createdAt: { type : Date, default: Date.now },
     updatedAt: { type : Date, default: Date.now },
     managedBy: { type : String},
-    image: { type: String }
+    image: { type: String },
+    userId: { type: String }
 });
 
 const Product = model("Product", productSchema);

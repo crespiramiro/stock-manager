@@ -2,7 +2,8 @@ const Product = require("../models/product");
 
 const productsGet = async (req, res) => {
   try {
-    const products = await Product.find();
+    const { userId } = req.user;
+    const products = await Product.find({ userId });
     res.json(products); // Solo envía la respuesta JSON
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -11,9 +12,10 @@ const productsGet = async (req, res) => {
 
 const getProductsByCategory = async (req,res) => {
   try {
+    const { userId } = req.user;
     const category = req.params.category;
     console.log('Category:', category); // Agrega este console.log para verificar el valor de category
-    const products = await Product.find({ category: category });
+    const products = await Product.find({ category, userId});
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -21,6 +23,7 @@ const getProductsByCategory = async (req,res) => {
 };
 
 const productsPost =  async (req, res) => {
+  console.log('Usuario autenticado:', req.user)
   const {
     name,
     description,
@@ -33,7 +36,9 @@ const productsPost =  async (req, res) => {
     images,
   } = req.body;
 
-  const newProduct = new Product({name, description, category, price, quantity, createdAt, updatedAt, managedBy, images})
+  const { userId } = req.user;
+
+  const newProduct = new Product({name, description, category, price, quantity, createdAt, updatedAt, managedBy, images, userId})
 
   await newProduct.save(); 
 
@@ -48,15 +53,20 @@ const productsPut = async (req, res) => {
     const productId = req.params.id;
     const newData = req.body;
     
-    // Asegúrate de incluir el campo updatedAt con la fecha y hora actual
+    const { userId } = req.user;
     newData.updatedAt = new Date();
+    newData.userId = userId;
 
     // Utiliza el método findOneAndUpdate para buscar el producto por su ID y actualizarlo con los nuevos datos
-    const updatedProduct = await Product.findOneAndUpdate({ _id: productId }, newData, { new: true });
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: productId, userId },
+      newData,
+      { new: true }
+    );
 
     // Verifica si se encontró y actualizó el producto
     if (!updatedProduct) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
+      return res.status(404).json({ message: 'Product not found or you do not have permission to update this product' });
     }
     
     res.json(updatedProduct);
@@ -69,13 +79,12 @@ const productsPut = async (req, res) => {
 const productsDelete = async (req, res) => {
   try {
     const productId = req.params.id;
+    const { userId } = req.user;
 
-    // Utiliza el método findByIdAndDelete de Mongoose para encontrar y eliminar el producto por su ID
-    const deletedProduct = await Product.findByIdAndDelete(productId);
+    const deletedProduct = await Product.findOneAndDelete({ _id: productId, userId });
     
-    // Verifica si se encontró y eliminó el producto
     if (!deletedProduct) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
+      return res.status(404).json({ message: 'Product not found or you do not have permission to delete this product' });
     }
     
     res.json({ message: 'Producto eliminado correctamente' });

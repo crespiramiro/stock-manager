@@ -35,10 +35,13 @@ export const ModalComponent = ({ product, onSave, onClose, isOpen }) => {
         ? `http://localhost:8080/api/products/${product}`
         : 'http://localhost:8080/api/products';
 
+        const token = localStorage.getItem('token');
+
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });

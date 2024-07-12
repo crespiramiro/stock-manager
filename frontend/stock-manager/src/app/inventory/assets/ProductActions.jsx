@@ -16,10 +16,14 @@ export const useProductActions = (getProducts) => {
         ? `http://localhost:8080/api/products/${product._id}`
         : 'http://localhost:8080/api/products';
 
+        const token = localStorage.getItem('token');
+        console.log('TOKEN', token);
+
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });
@@ -39,12 +43,20 @@ export const useProductActions = (getProducts) => {
   };
 
   const handleDeleteProduct = async (id) => {
+
+    const token = localStorage.getItem('token'); // Obtén el token JWT almacenado
+    console.log('TOKEN', token);
+    const headers = {
+    'Authorization': `Bearer ${token}`
+  };
+
     const confirmed = window.confirm("Are you sure you want to delete this product?");
     if (!confirmed) return;
 
     try {
       const response = await fetch(`http://localhost:8080/api/products/${id}`, {
         method: 'DELETE',
+        headers: headers,
       });
 
       if (!response.ok) {

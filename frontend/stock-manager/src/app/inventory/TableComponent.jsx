@@ -15,14 +15,23 @@ export const TableComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const getProducts = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/products');
-      
-      // Verificar si la respuesta es exitosa
-      if (!response.ok) {
-        throw new Error('Error en la solicitud');
-      }
-  
+
+    const token = localStorage.getItem('token'); // Obtén el token JWT almacenado
+
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  };
+
+  try {
+    const response = await fetch('http://localhost:8080/api/products', {
+      method: 'GET',
+      headers: headers
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+
       const data = await response.json();
       setProducts(data)
   
