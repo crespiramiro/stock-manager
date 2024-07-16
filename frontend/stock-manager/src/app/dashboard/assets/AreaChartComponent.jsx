@@ -44,8 +44,8 @@ export const AreaChartComponent = () => {
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 10, right: 45, left: 45, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis tickFormatter={formatYAxis} />
+          <XAxis dataKey="name" tick={{ fontSize: 14, fill: '#333' }} />
+          <YAxis tickFormatter={formatYAxis} tick={{ fontSize: 14, fill: '#333' }} />
           <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
           <Legend />
           <Area type="monotone" dataKey="averagePrice" stroke="#2fad7e" fill="#2fad7e" />
