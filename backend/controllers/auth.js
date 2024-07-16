@@ -21,7 +21,7 @@ const register = async (req,res) => {
 
 const login = async (req,res) => {
     try{
-    const {email,password} = req.body;
+    const {email,password, username} = req.body;
     const user = await User.findOne({email});
 
     if (!user) {
@@ -32,7 +32,7 @@ const login = async (req,res) => {
     
     if (comparePassword) {
         const token = jwt.sign
-        ({userId: user._id, userEmail: user.email},
+        ({userId: user._id, userEmail: user.email, userName: user.username},
              process.env.JWT_SECRET,
               {expiresIn: 60*2});
 
