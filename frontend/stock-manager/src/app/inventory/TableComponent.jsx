@@ -13,33 +13,62 @@ export const TableComponent = () => {
   const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
   const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
   const [searchTerm, setSearchTerm] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token')); // Estado para el token
 
   const getProducts = async () => {
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
 
-    const token = localStorage.getItem('token'); // Obtén el token JWT almacenado
+    try {
+      const response = await fetch('http://localhost:8080/api/products', {
+        method: 'GET',
+        headers: headers
+      });
 
-  const headers = {
-    'Authorization': `Bearer ${token}`
-  };
+      if (response.status === 401) { // Si el token está expirado o inválido
+        await refreshToken();
+        return; // Reintentar la solicitud después de actualizar el token
+      }
 
-  try {
-    const response = await fetch('http://localhost:8080/api/products', {
-      method: 'GET',
-      headers: headers
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en la solicitud');
-    }
+      if (!response.ok) {
+        throw new Error('Error en la solicitud');
+      }
 
       const data = await response.json();
-      setProducts(data)
-  
-      // Aquí puedes hacer algo con los datos recibidos
+      setProducts(data);
       console.log(data);
     } catch (error) {
-      // Manejo de errores
       console.error('Error al obtener los productos:', error);
+      // Redirigir al usuario si el error es relacionado con la autenticación
+      if (error.message.includes('401')) {
+        window.location.href = '/'; // Redirige al inicio de sesión o página de error
+      }
+    }
+  };
+
+  const refreshToken = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/refresh-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al renovar el token');
+      }
+
+      const { token: newToken } = await response.json();
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      // Volver a intentar la solicitud original
+      getProducts();
+    } catch (error) {
+      console.error('Error al renovar el token:', error);
+      window.location.href = '/'; // Redirige al inicio de sesión o página de error
     }
   };
 
@@ -63,7 +92,7 @@ export const TableComponent = () => {
 
   useEffect(() => {
     getProducts();
-  }, [sortBy]); // La dependencia vacía [] indica que se ejecutará una sola vez al montar el componente
+  }, [sortBy, token]); // La dependencia vacía [] indica que se ejecutará una sola vez al montar el componente
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
