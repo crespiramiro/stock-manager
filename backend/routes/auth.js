@@ -73,5 +73,26 @@ router.post(
     }
 );
 
+// En tu archivo de rutas o controlador
+router.post('/api/refresh-token', async (req, res) => {
+  const { token } = req.body;
+
+  if (!token) {
+    return res.status(400).json({ message: 'Token requerido' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Aquí puedes generar un nuevo token
+    const newToken = jwt.sign({ userId: decoded.userId }, process.env.JWT_SECRET, { expiresIn: '2h' });
+
+    res.json({ token: newToken });
+  } catch (error) {
+    res.status(401).json({ message: 'Token inválido' });
+  }
+});
+
+
   
   module.exports = router;
