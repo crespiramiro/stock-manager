@@ -65,13 +65,13 @@ export default function Maincontent () {
         <div className="total-products">
           <h2 className="text-3xl font-medium">Total Products</h2>
         </div>
-        <article className="charts flex flex-row w-full gap-x-8">
-          <div className="chart1 w-1/2 h-96 p-4 bg-gray-50 shadow-sm rounded-md">
+        <article className="charts flex flex-col md:flex-row w-full gap-y-12 gap-x-8">
+          <div className="chart1 md:w-1/2 h-72 md:h-96 p-0 md:p-4 bg-gray-50 shadow-sm rounded-md">
             <Suspense fallback={<div>Loading Chart Component...</div>}>
               <AreaChartComponent token={token} />
             </Suspense>
           </div>
-          <div className="chart2 w-1/2 h-96 p-4 bg-gray-50 shadow-sm rounded-md">
+          <div className="chart2 md:w-1/2 h-72 md:h-96 p-4 bg-gray-50 shadow-sm rounded-md">
             <Suspense fallback={<div>Loading Chart Component...</div>}>
               <ChartComponent2 token={token} />
             </Suspense>

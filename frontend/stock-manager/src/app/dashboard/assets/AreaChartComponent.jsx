@@ -57,7 +57,7 @@ const AreaChartComponent = ({token}) => {
   const formatYAxis = (tick) => `$${tick.toLocaleString()}`;
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={chartData} margin={{ top: 10, right: 45, left: 45, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" />
