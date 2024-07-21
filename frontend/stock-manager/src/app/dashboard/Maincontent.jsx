@@ -1,8 +1,8 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Topbar from "./Topbar";
-import { AreaChartComponent } from "./assets/AreaChartComponent";
-import { ChartComponent2 } from "./assets/ChartComponent2";
+const ChartComponent2 = lazy(() => import('./assets/ChartComponent2'));
+const AreaChartComponent =lazy(() => import('./assets/AreaChartComponent'));
 
 export default function Maincontent () {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -57,7 +57,7 @@ export default function Maincontent () {
 
 
     return (
-<main className="w-full h-screen overflow-auto bg-white shadow-md">
+      <main className="w-full h-screen overflow-auto bg-white shadow-md">
       <section className="topbar-container">
         <Topbar />
       </section>
@@ -67,10 +67,14 @@ export default function Maincontent () {
         </div>
         <article className="charts flex flex-row w-full gap-x-8">
           <div className="chart1 w-1/2 h-96 p-4 bg-gray-50 shadow-sm rounded-md">
-            <AreaChartComponent token={token} />
+            <Suspense fallback={<div>Loading Chart Component...</div>}>
+              <AreaChartComponent token={token} />
+            </Suspense>
           </div>
           <div className="chart2 w-1/2 h-96 p-4 bg-gray-50 shadow-sm rounded-md">
-            <ChartComponent2 token={token} />
+            <Suspense fallback={<div>Loading Chart Component...</div>}>
+              <ChartComponent2 token={token} />
+            </Suspense>
           </div>
         </article>
       </section>

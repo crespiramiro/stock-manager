@@ -2,7 +2,7 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from "react";
 
-export const ChartComponent2 = ({token}) => {
+const ChartComponent2 = ({token}) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -68,3 +68,5 @@ export const ChartComponent2 = ({token}) => {
   </div>
   );
 };
+
+export default ChartComponent2;
