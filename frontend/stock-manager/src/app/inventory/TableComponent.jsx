@@ -14,7 +14,7 @@ const TableComponent = () => {
   const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState(localStorage.getItem('token')); // Estado para el token
-  const [totalProducts, setTotalProducts] = useState(0)
+  const [totalProducts, setTotalProducts] = useState(0);
 
   const getProducts = async () => {
     const headers = {
@@ -38,7 +38,6 @@ const TableComponent = () => {
 
       const data = await response.json();
       setProducts(data);
-      setTotalProducts(data.length)
       console.log(data);
     } catch (error) {
       console.error('Error al obtener los productos:', error);
@@ -48,6 +47,19 @@ const TableComponent = () => {
       }
     }
   };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('/api/products');
+        setTotalProducts(response.data.length);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const refreshToken = async () => {
     try {
@@ -121,7 +133,7 @@ const TableComponent = () => {
         <div className="my-5 flex items-center justify-between px-6">
           <div className="flex items-center gap-5">
             <p className="text-body-1 font-semibold text-metal-600">Products</p>
-            <Badge size="sm"  className="p-3" color="secondary">{totalProducts}</Badge>
+            <Badge size="sm"  className="p-2" color="secondary"><nav>{totalProducts}</nav></Badge>
           </div>
           <div>
           <DropdownComponent sortBy={sortBy} handleSortChange={handleSortChange} />
