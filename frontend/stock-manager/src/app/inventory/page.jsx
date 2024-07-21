@@ -7,9 +7,9 @@ export default function Inventory() {
 
     return( 
             <AuthGuard>
-        <main className="min-h-screen w-full flex flex-row " >
+        <main className="min-h-screen w-full flex flex-row  overflow-hidden " >
             <Slidebar />
-            <section className="content w-full h-full  px-12 mt-4 scroll ">
+            <section className="content w-full h-full  px-12 mt-4 ">
                 <ToastWrapper 
                     toastOptions={{
                         classNames: {
