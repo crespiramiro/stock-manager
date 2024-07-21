@@ -1,8 +1,8 @@
 import { ToastWrapper } from "keep-react"
 import Slidebar from "../dashboard/Slidebar"
-import { TableComponent } from "./TableComponent"
-import { ToastComponent } from "./assets/ToastComponent"
 import AuthGuard from "../components/AuthGuard"
+import { Suspense, lazy } from "react"
+const TableComponent = lazy(() => import('./TableComponent') )
 export default function Inventory() {
 
     return( 
@@ -26,7 +26,9 @@ export default function Inventory() {
                         },
                       }}
                 />
-            <TableComponent/>
+                <Suspense fallback={<div>Loading Table...</div>} >
+                    <TableComponent/>
+                </Suspense>
             </section>
         </main>
         </AuthGuard>

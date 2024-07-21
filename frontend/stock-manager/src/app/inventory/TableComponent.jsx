@@ -8,7 +8,7 @@ import { useProductActions } from "./assets/ProductActions";
 import EditProductModal from "./assets/EditProduct";
 import { ModalComponent } from "./assets/ModalComponent";
 
-export const TableComponent = () => {
+const TableComponent = () => {
   const [products, setProducts] = useState([]);
   const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
   const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
@@ -224,3 +224,4 @@ export const TableComponent = () => {
   );
 };
 
+export default TableComponent;
