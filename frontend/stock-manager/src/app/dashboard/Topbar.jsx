@@ -12,7 +12,6 @@ export default function Topbar () {
         if (token) {
           try {
             const decodedToken = jwtDecode(token);
-            console.log('DECODED TOKEN', decodedToken);
             setUserName(decodedToken.userName); 
           } catch (error) {
             console.error('Error decoding token:', error);

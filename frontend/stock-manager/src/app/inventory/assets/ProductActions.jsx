@@ -17,8 +17,6 @@ export const useProductActions = (getProducts) => {
         : 'http://localhost:8080/api/products';
 
         const token = localStorage.getItem('token');
-        console.log('TOKEN', token);
-
       const response = await fetch(url, {
         method,
         headers: {
@@ -45,7 +43,6 @@ export const useProductActions = (getProducts) => {
   const handleDeleteProduct = async (id) => {
 
     const token = localStorage.getItem('token'); 
-    console.log('TOKEN', token);
     const headers = {
     'Authorization': `Bearer ${token}`
   };

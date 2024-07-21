@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 const AuthGuard = ({ children }) => {
   const token = localStorage.getItem('token');
-  console.log(token, 'TOKEN')
 
    
   useEffect(() => {

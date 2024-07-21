@@ -11,7 +11,6 @@ export default function LoginForm({ onSuccess }) {
     const router = useRouter(); 
 
     const onSubmit = async (data) => {
-        console.log("data" + data); // Aquí puedes ver los datos del formulario
         try {
             const response = await fetch('http://localhost:8080/api/auth/login', {
               method: 'POST',
@@ -32,7 +31,6 @@ export default function LoginForm({ onSuccess }) {
             }
       
             const result = await response.json();
-            console.log('User logged in:', result);
             const token = result.token;
 
             localStorage.setItem('token', token);

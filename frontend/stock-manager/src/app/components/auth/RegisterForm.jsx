@@ -30,7 +30,6 @@ export default function RegisterForm({ onSuccess }) {
   
 
         const result = await response.json();
-        console.log('User registered:', result);
 
         // show success message
         setSuccessMessage('User registered successfully! Redirecting to login...');

@@ -29,7 +29,6 @@ export const ModalComponent = ({ product, onSave, onClose, isOpen }) => {
     
   const onSubmit = async (formData) => {
     try {
-      console.log(product, "PRODUCTO");
       const method = product ? 'PUT' : 'POST';
       const url = product 
         ? `http://localhost:8080/api/products/${product}`

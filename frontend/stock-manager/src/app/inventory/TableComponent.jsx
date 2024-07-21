@@ -97,16 +97,13 @@ const TableComponent = () => {
   };
 
   const openModal = (product) => {
-    console.log('Opening modal for product:', product);
     handleEditProduct(product);
     setIsOpen(true);
-    console.log('Modal open state set to true');
   };
 
   const closeModal = () => {
     handleEditProduct(null);
     setIsOpen(false);
-    console.log('Modal open state set to false');
   };
 
   return (
