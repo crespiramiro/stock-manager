@@ -6,6 +6,8 @@ import sortProducts from "./assets/SortProducts";
 import DropdownComponent from "./assets/DropDownComponent";
 import { useProductActions } from "./assets/ProductActions";
 import { ModalComponent } from "./assets/ModalComponent";
+import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+
 
 const TableComponent = () => {
   const [products, setProducts] = useState([]);
@@ -14,6 +16,9 @@ const TableComponent = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [token, setToken] = useState(localStorage.getItem('token')); 
   const [totalProducts, setTotalProducts] = useState(0);
+  const router = useRouter()
+
+  
 
   const getProducts = async () => {
     const headers = {
@@ -41,7 +46,7 @@ const TableComponent = () => {
     } catch (error) {
       console.error('error getting products', error);
       if (error.message.includes('401')) {
-        window.location.href = '/'; 
+        router.push('/')
       }
     }
   };
@@ -66,7 +71,7 @@ const TableComponent = () => {
       getProducts();
     } catch (error) {
       console.error('Error renewing token', error);
-      window.location.href = '/'; 
+      router.push('/')
     }
   };
 

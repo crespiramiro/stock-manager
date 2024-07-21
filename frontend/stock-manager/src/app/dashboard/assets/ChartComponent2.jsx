@@ -1,9 +1,11 @@
 "use client";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 const ChartComponent2 = ({token}) => {
   const [chartData, setChartData] = useState([]);
+  const router = useRouter()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +44,7 @@ const ChartComponent2 = ({token}) => {
       } catch (error) {
         console.error("Error fetching product data:", error);
         if (error.message.includes('401')) {
-          window.location.href = '/'; 
+         router.push('/')
         }
       }
     };

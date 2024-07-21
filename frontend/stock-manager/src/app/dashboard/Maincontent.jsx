@@ -3,12 +3,13 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import Topbar from "./Topbar";
 const ChartComponent2 = lazy(() => import('./assets/ChartComponent2'));
 const AreaChartComponent =lazy(() => import('./assets/AreaChartComponent'));
+import { useRouter } from 'next/navigation'
+
 
 export default function Maincontent () {
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const router = useRouter()
 
-
- 
   const refreshToken = async () => {
     try {
       const response = await fetch('http://localhost:8080/api/refresh-token', {
@@ -28,7 +29,7 @@ export default function Maincontent () {
       setToken(newToken);
     } catch (error) {
       console.error('Error al renovar el token:', error);
-      window.location.href = '/'; 
+      router.push('/')
     }
   };
 
@@ -47,7 +48,7 @@ export default function Maincontent () {
       } catch (error) {
         console.error('Error en la solicitud:', error);
         if (error.message.includes('401')) {
-          window.location.href = '/'; 
+          router.push('/')
         }
       }
     };

@@ -1,18 +1,20 @@
 'use client'
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 
 const AuthGuard = ({ children }) => {
-  const token = localStorage.getItem('token');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const router = useRouter()
 
-   
+
   useEffect(() => {
     if (!token) {
-      window.location.href = '/';
+      router.push('/'); 
     }
-  }, []);
+  }, [router, token]);
 
   if (!token) {
-    return null;
+    return null; 
   }
 
   return <>{children}</>;

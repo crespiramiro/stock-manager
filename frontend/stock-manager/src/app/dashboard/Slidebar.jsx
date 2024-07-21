@@ -1,16 +1,9 @@
 'use client'
+import Link from "next/link"
 import { ArrowLeft, List } from "phosphor-react"
 import { useState } from "react"
 
 export default function Slidebar (){
-
-    const handleInventory = () => {
-        window.location.href='/inventory'
-    }
-
-    const handleHome = () => {
-        window.location.href='/'
-    }
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -26,8 +19,8 @@ export default function Slidebar (){
                 <h2 className={`font-semibold ${isOpen ? 'text-2xl md:text-4xl text-center self-center text-wrap ' : 'hidden'} py-4 px-8 `}>Stock Management</h2>
             <div className="flex flex-col h-full justify-between">
                 <ul className={`flex flex-col font-semibold gap-y-8 ${isOpen ? 'items-center' : 'items-center'}`}>
-                    <li className={`${isOpen ? 'text-2xl' : 'hidden'} hover:cursor-pointer`} onClick={handleHome}>Home</li>
-                    <li className={`${isOpen ? 'text-2xl' : 'hidden'} hover:cursor-pointer`} onClick={handleInventory}>Inventory</li>
+                    <Link href={"/dashboard"} className={`${isOpen ? 'text-2xl' : 'hidden'} hover:cursor-pointer`}>Home</Link>
+                    <Link href={"/inventory"} className={`${isOpen ? 'text-2xl' : 'hidden'} hover:cursor-pointer`}>Inventory</Link>
                 </ul>
                 <ul className={`flex flex-col font-semibold ${isOpen ? 'items-center' : 'items-center'} py-8`}>
                     <li className={`${isOpen ? 'text-2xl' : 'hidden'}`}>Help</li>
