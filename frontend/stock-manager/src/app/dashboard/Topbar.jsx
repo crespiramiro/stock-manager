@@ -1,6 +1,5 @@
 'use client'
 import { DropdownComponent } from "./assets/Dropdown";
-import Searchbar from "./assets/Searchbar";
 import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
 
@@ -26,7 +25,6 @@ export default function Topbar () {
        
             <section className="flex flex-row items-center justify-end pr-16 py-4 gap-x-48 " >
                <div className="items-center" >
-               <Searchbar/>
                </div>
                <div className="flex flex-row items-center gap-x-6  " >
                <h2>Hi, {userName || 'User'}</h2>

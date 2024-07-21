@@ -19,7 +19,7 @@ export default function Slidebar (){
     };
 
     return (
-        <section className={`flex flex-col gap-y-12 h-screen ${isOpen ? 'w-1/2 md:w-1/3 ' : 'w-3/12 md:w-2/12 '} text-center bg-black text-[#f5f5f5] px-4 md:px-12 py-8 transition-all duration-300`}>
+        <section className={`flex flex-col gap-y-12 h-screen ${isOpen ? 'w-1/2 md:w-[30%] ' : 'w-3/12 md:w-2/12 '} text-center bg-black text-[#f5f5f5] px-4 md:px-12 py-8 transition-all duration-300`}>
             <button className={`${isOpen ? 'self-end' : 'self-center' }`} onClick={toggleMenu}>
                     {isOpen ? <ArrowLeft size={32} /> : <List size={32} />}
                 </button>
