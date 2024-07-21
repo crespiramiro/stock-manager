@@ -38,6 +38,7 @@ const TableComponent = () => {
 
       const data = await response.json();
       setProducts(data);
+      setTotalProducts(data.length);
       console.log(data);
     } catch (error) {
       console.error('Error al obtener los productos:', error);
@@ -47,19 +48,6 @@ const TableComponent = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get('/api/products');
-        setTotalProducts(response.data.length);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   const refreshToken = async () => {
     try {
