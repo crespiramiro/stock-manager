@@ -13,10 +13,6 @@ export const DropdownComponent = () => {
 
   return (
     <Dropdown>
-        <Dropdown.Item>
-          <UserCircle size={20} />
-          Account
-        </Dropdown.Item>
         <Dropdown.Item onClick={handleLogout} >
           <SignOut size={20} />
           Logout
