@@ -19,7 +19,7 @@ const jwtValidate = (req, res, next) => {
     }
 
     req.user = decoded;
-    next(); // Llama a next() solo después de que el token se haya verificado correctamente
+    next();
   });
 };
 

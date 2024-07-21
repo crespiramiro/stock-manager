@@ -1,9 +1,9 @@
-require('dotenv').config(); // Agrega esta línea al principio del archivo
+require('dotenv').config(); 
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const dbConnection = require('./database/database.js');
-const rateLimit = require('express-rate-limit'); // Importa express-rate-limit
+const rateLimit = require('express-rate-limit'); 
 
 class Server {
     constructor(){
@@ -35,8 +35,8 @@ class Server {
         this.app.use(this.requestLogger);
     
         const limiter = rateLimit({
-            windowMs: 15 * 60 * 1000, // 15 minutos
-            max: 100, // Límite de 100 solicitudes por ventana
+            windowMs: 15 * 60 * 1000, 
+            max: 100, 
             message: 'Too many requests from this IP, please try again later.'
         });
 

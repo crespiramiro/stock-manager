@@ -28,7 +28,7 @@ export default function Maincontent () {
       setToken(newToken);
     } catch (error) {
       console.error('Error al renovar el token:', error);
-      window.location.href = '/'; // Redirige al inicio de sesión o página de error
+      window.location.href = '/'; 
     }
   };
 
@@ -41,13 +41,13 @@ export default function Maincontent () {
           }
         });
 
-        if (response.status === 401) { // Si el token está expirado o inválido
+        if (response.status === 401) { 
           await refreshToken();
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);
         if (error.message.includes('401')) {
-          window.location.href = '/'; // Redirige al inicio de sesión o página de error
+          window.location.href = '/'; 
         }
       }
     };

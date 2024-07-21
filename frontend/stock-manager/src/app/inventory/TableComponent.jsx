@@ -1,19 +1,18 @@
 "use client";
-import { Avatar, Badge, Button, Popover, Table } from "keep-react";
-import { ArrowDown,CurrencyDollar, MagnifyingGlass, Cube, DotsThreeOutline, Pencil, Trash, FileSearch, Clock, Drop } from "phosphor-react";
+import {  Badge, Button, Table } from "keep-react";
+import { CurrencyDollar, MagnifyingGlass, Cube, Pencil, Trash, Clock} from "phosphor-react";
 import { useEffect, useState } from "react";
 import sortProducts from "./assets/SortProducts";
 import DropdownComponent from "./assets/DropDownComponent";
 import { useProductActions } from "./assets/ProductActions";
-import EditProductModal from "./assets/EditProduct";
 import { ModalComponent } from "./assets/ModalComponent";
 
 const TableComponent = () => {
   const [products, setProducts] = useState([]);
-  const [sortBy, setSortBy] = useState('priceLowest'); // Estado para el tipo de orden
-  const [isOpen, setIsOpen] = useState(false); // Nuevo estado para controlar la apertura del modal
+  const [sortBy, setSortBy] = useState('priceLowest'); 
+  const [isOpen, setIsOpen] = useState(false); 
   const [searchTerm, setSearchTerm] = useState('');
-  const [token, setToken] = useState(localStorage.getItem('token')); // Estado para el token
+  const [token, setToken] = useState(localStorage.getItem('token')); 
   const [totalProducts, setTotalProducts] = useState(0);
 
   const getProducts = async () => {
@@ -27,24 +26,22 @@ const TableComponent = () => {
         headers: headers
       });
 
-      if (response.status === 401) { // Si el token está expirado o inválido
+      if (response.status === 401) { 
         await refreshToken();
-        return; // Reintentar la solicitud después de actualizar el token
+        return; 
       }
 
       if (!response.ok) {
-        throw new Error('Error en la solicitud');
+        throw new Error('Request error');
       }
 
       const data = await response.json();
       setProducts(data);
       setTotalProducts(data.length);
-      console.log(data);
     } catch (error) {
-      console.error('Error al obtener los productos:', error);
-      // Redirigir al usuario si el error es relacionado con la autenticación
+      console.error('error getting products', error);
       if (error.message.includes('401')) {
-        window.location.href = '/'; // Redirige al inicio de sesión o página de error
+        window.location.href = '/'; 
       }
     }
   };
@@ -60,17 +57,16 @@ const TableComponent = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Error al renovar el token');
+        throw new Error('Error renewing token');
       }
 
       const { token: newToken } = await response.json();
       localStorage.setItem('token', newToken);
       setToken(newToken);
-      // Volver a intentar la solicitud original
       getProducts();
     } catch (error) {
-      console.error('Error al renovar el token:', error);
-      window.location.href = '/'; // Redirige al inicio de sesión o página de error
+      console.error('Error renewing token', error);
+      window.location.href = '/'; 
     }
   };
 
@@ -78,7 +74,6 @@ const TableComponent = () => {
     setSortBy(value);
   };
 
-  // Obtener productos ordenados utilizando sortProducts
   const sortedProducts = sortProducts(products, sortBy);
 
   const handleSearchChange = (event) => {
@@ -94,7 +89,7 @@ const TableComponent = () => {
 
   useEffect(() => {
     getProducts();
-  }, [sortBy, token]); // La dependencia vacía [] indica que se ejecutará una sola vez al montar el componente
+  }, [sortBy, token]);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -160,11 +155,9 @@ const TableComponent = () => {
         {filteredProducts.map((product) => (
           <Table.Row key={product._id} className="bg-white">
             <Table.Cell>
-              {/* Renderizar el nombre del producto y más detalles si es necesario */}
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
-                    {/* Aquí deberías renderizar el nombre del producto */}
                     <div>
                       <p className="-mb-0.5 text-body-4 font-medium text-metal-600">{product.name}</p>
                     </div>
@@ -173,14 +166,12 @@ const TableComponent = () => {
               </div>
             </Table.Cell>
             <Table.Cell>
-              {/* Renderizar el precio, puedes usar un Badge o simplemente mostrar el número */}
               <Badge color="primary">
               <CurrencyDollar size={24} />
                 <span className="px-1">{product.price}</span>
               </Badge>
             </Table.Cell>
             <Table.Cell>
-              {/* Mostrar el stock, podrías condicionar el Badge según el stock */}
               {product.quantity < 5 ? (
                 <Badge color="warning">{product.quantity}</Badge>
               ) : (
@@ -188,11 +179,9 @@ const TableComponent = () => {
               )}
             </Table.Cell>
             <Table.Cell className=" text-body-4 font-medium" >
-              {/* Mostrar la categoría */}
               {product.category}
             </Table.Cell>
             <Table.Cell>
-              {/* Mostrar la fecha de actualización */}
               <div className="flex items-center gap-1">
                 <Badge color="secondary">
                   <Clock size={18} />

@@ -17,13 +17,13 @@ const ChartComponent2 = ({token}) => {
           headers: headers
         });
 
-        if (response.status === 401) { // Si el token está expirado o inválido
+        if (response.status === 401) {
           await refreshToken();
-          return; // Reintentar la solicitud después de actualizar el token
+          return; 
         }
 
         if (!response.ok) {
-          throw new Error('Error en la solicitud');
+          throw new Error('Request Error');
         }
 
         const products = await response.json();
@@ -38,13 +38,11 @@ const ChartComponent2 = ({token}) => {
           quantity
         }));
 
-        console.log("Formatted Data for ChartComponent2:", formattedData);
         setChartData(formattedData);
       } catch (error) {
         console.error("Error fetching product data:", error);
-        // Redirigir al usuario si el error es relacionado con la autenticación
         if (error.message.includes('401')) {
-          window.location.href = '/'; // Redirige al inicio de sesión o página de error
+          window.location.href = '/'; 
         }
       }
     };

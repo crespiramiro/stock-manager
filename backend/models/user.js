@@ -15,7 +15,7 @@ const userSchema = new Schema({
     default: true }
 },
 { timestamps: true },
-{ collection: 'usuarios' } // Aquí especificamos el nombre de la colección como 'usuarios'
+{ collection: 'usuarios' }
 )
 
 const User = model("User", userSchema); 

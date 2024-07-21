@@ -13,7 +13,7 @@ export default function Topbar () {
           try {
             const decodedToken = jwtDecode(token);
             console.log('DECODED TOKEN', decodedToken);
-            setUserName(decodedToken.userName); // O la propiedad correcta para el nombre de usuario
+            setUserName(decodedToken.userName); 
           } catch (error) {
             console.error('Error decoding token:', error);
           }

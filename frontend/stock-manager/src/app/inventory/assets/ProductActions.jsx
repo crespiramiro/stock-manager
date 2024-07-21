@@ -44,7 +44,7 @@ export const useProductActions = (getProducts) => {
 
   const handleDeleteProduct = async (id) => {
 
-    const token = localStorage.getItem('token'); // Obtén el token JWT almacenado
+    const token = localStorage.getItem('token'); 
     console.log('TOKEN', token);
     const headers = {
     'Authorization': `Bearer ${token}`

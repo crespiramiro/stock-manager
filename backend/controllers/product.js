@@ -4,7 +4,7 @@ const productsGet = async (req, res) => {
   try {
     const { userId } = req.user;
     const products = await Product.find({ userId });
-    res.json(products); // Solo envía la respuesta JSON
+    res.json(products); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -14,7 +14,6 @@ const getProductsByCategory = async (req,res) => {
   try {
     const { userId } = req.user;
     const category = req.params.category;
-    console.log('Category:', category); // Agrega este console.log para verificar el valor de category
     const products = await Product.find({ category, userId});
     res.json(products);
   } catch (error) {
@@ -23,7 +22,6 @@ const getProductsByCategory = async (req,res) => {
 };
 
 const productsPost =  async (req, res) => {
-  console.log('Usuario autenticado:', req.user)
   const {
     name,
     description,
@@ -57,14 +55,12 @@ const productsPut = async (req, res) => {
     newData.updatedAt = new Date();
     newData.userId = userId;
 
-    // Utiliza el método findOneAndUpdate para buscar el producto por su ID y actualizarlo con los nuevos datos
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: productId, userId },
       newData,
       { new: true }
     );
 
-    // Verifica si se encontró y actualizó el producto
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found or you do not have permission to update this product' });
     }
@@ -87,7 +83,7 @@ const productsDelete = async (req, res) => {
       return res.status(404).json({ message: 'Product not found or you do not have permission to delete this product' });
     }
     
-    res.json({ message: 'Producto eliminado correctamente' });
+    res.json({ message: 'Producto deleted succesfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

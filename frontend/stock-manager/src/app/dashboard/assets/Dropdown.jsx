@@ -1,11 +1,10 @@
 'use client'
-import { ChartPieSlice, Copy, Pen, Phone, SignOut, UserCircle, Users } from 'phosphor-react'
-import { Divider, Dropdown } from 'keep-react'
+import {  SignOut, UserCircle, Users } from 'phosphor-react'
+import {  Dropdown } from 'keep-react'
 
 export const DropdownComponent = () => {
   
   const handleLogout = () => {
-    // Eliminar el token del localStorage
     localStorage.removeItem('token');
     console.log('user logged out succesfully, redircting to login');
     window.location.href = '/';

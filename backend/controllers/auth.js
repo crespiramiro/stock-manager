@@ -14,7 +14,6 @@ const register = async (req,res) => {
         await newUser.save();
         res.status(201).json({user: newUser, message: "user created succesfully"})
     } catch(error){
-        console.log("failed to register user" + error.message );
         res.status(500).json({message: 'failed to register user'})
     }
 };
@@ -28,7 +27,7 @@ const login = async (req,res) => {
         res.status(400).json({message: "wrong email"})
     }
 
-    const comparePassword = bcrypt.compareSync(password, user.password); // boolean
+    const comparePassword = bcrypt.compareSync(password, user.password); 
     
     if (comparePassword) {
         const token = jwt.sign
@@ -41,7 +40,6 @@ const login = async (req,res) => {
         res.status(400).json({message: "wrong password"})
     }
 }catch(error){
-    console.log('login error' + error.message);
     res.status(500).json('login error')
 }
 }

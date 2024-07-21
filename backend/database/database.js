@@ -1,9 +1,9 @@
-require('dotenv').config(); // Agrega esta línea al principio del archivo
+require('dotenv').config(); 
 const mongoose = require('mongoose');
 
 const dbConnection = async () => {
     try {
-        await mongoose.connect(process.env.MONGODB_URI, { // Usa la variable de entorno para la cadena de conexión
+        await mongoose.connect(process.env.MONGODB_URI, { 
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
