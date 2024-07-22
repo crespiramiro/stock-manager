@@ -112,8 +112,7 @@ const TableComponent = () => {
   };
 
   return (
-    <Table hoverable={true} showBorder={true}
-    showCheckbox={true}>
+    <Table hoverable={true} showBorder={true}>
       <Table.Caption>
         <div className="my-5 flex items-center justify-between px-6">
           <div className="flex items-center gap-5">
