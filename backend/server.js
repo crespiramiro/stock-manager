@@ -31,6 +31,13 @@ class Server {
     middlewares(){
         this.app.use(express.json());
         this.app.use(express.static('public'));
+
+        const corsOptions = {
+            origin: 'https://stock-manager-phi.vercel.app', 
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            credentials: true,
+        };
+
         this.app.use(cors());
         this.app.use(this.requestLogger);
     
