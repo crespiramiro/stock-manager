@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { FunnelSimple } from 'phosphor-react';
 
-const DropdownComponent = ({ handleSortChange }) => {
+const DropdownC = ({ handleSortChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownOptions = [
     { value: 'priceLowest', label: 'Price (Lowest first)' },
@@ -52,4 +52,4 @@ const DropdownComponent = ({ handleSortChange }) => {
   );
 };
 
-export default DropdownComponent;
+export default DropdownC;

@@ -3,10 +3,10 @@ import {  Badge, Button, Table } from "keep-react";
 import { CurrencyDollar, MagnifyingGlass, Cube, Pencil, Trash, Clock} from "phosphor-react";
 import { useEffect, useState } from "react";
 import sortProducts from "./assets/SortProducts";
-import DropdownComponent from "./assets/DropDownComponent";
 import { useProductActions } from "./assets/ProductActions";
 import { ModalComponent } from "./assets/ModalComponent";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import DropdownC from "./assets/DropDownC";
 
 
 const TableComponent = () => {
@@ -120,7 +120,7 @@ const TableComponent = () => {
             <Badge size="sm"  className="p-2" color="secondary"><nav>{totalProducts}</nav></Badge>
           </div>
           <div>
-          <DropdownComponent sortBy={sortBy} handleSortChange={handleSortChange} />
+          <DropdownC sortBy={sortBy} handleSortChange={handleSortChange} />
       </div>
           <div className="flex items-center gap-5">
             <Button variant="outline" className="p-3" size="sm" onClick={() => { console.log('Add Product button clicked'); openModal(null); }}>
