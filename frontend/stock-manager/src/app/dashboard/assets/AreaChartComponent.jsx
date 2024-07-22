@@ -1,31 +1,48 @@
 "use client";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
 
-const AreaChartComponent = ({token}) => {
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { TrendingUp } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+
+const AreaChartComponent = ({ token }) => {
   const [chartData, setChartData] = useState([]);
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const headers = {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         };
 
-        const response = await fetch('http://localhost:8080/api/products', {
-          method: 'GET',
-          headers: headers
+        const response = await fetch("http://localhost:8080/api/products", {
+          method: "GET",
+          headers: headers,
         });
 
         if (response.status === 401) {
           await refreshToken();
-          return; 
+          return;
         }
 
         if (!response.ok) {
-          throw new Error('Request Error');
+          throw new Error("Request Error");
         }
 
         const products = await response.json();
@@ -39,15 +56,15 @@ const AreaChartComponent = ({token}) => {
 
         const formattedData = Object.entries(categoryPrices).map(([name, data]) => ({
           name,
-          averagePrice: data.total / data.count
+          averagePrice: data.total / data.count,
         }));
 
         setChartData(formattedData);
       } catch (error) {
         console.error("Error fetching product data:", error);
-        
-        if (error.message.includes('401')) {
-          router.push('/')
+
+        if (error.message.includes("401")) {
+          router.push("/");
         }
       }
     };
@@ -55,21 +72,38 @@ const AreaChartComponent = ({token}) => {
     fetchData();
   }, [token]);
 
-  const formatYAxis = (tick) => `$${tick.toLocaleString()}`;
+  const chartConfig = {
+    averagePrice: {
+      label: "Average Price",
+      color: "hsl(var(--chart-1))",
+    },
+  };
 
   return (
-    <div className="w-full h-full ">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={chartData} margin={{ top: 10, right: 45, left: 45, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" tick={{ fontSize: 14, fill: '#333' }} />
-          <YAxis tickFormatter={formatYAxis} tick={{ fontSize: 14, fill: '#333' }} />
-          <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-          <Legend />
-          <Area type="monotone" dataKey="averagePrice" stroke="#2fad7e" fill="#2fad7e" />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Average Price by Category</CardTitle>
+        <CardDescription>Price data for various product categories</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={chartData} margin={{ top: 10, right: 30, left: 30, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" tick={{ fontSize: 14, fill: '#333' }} />
+              <YAxis tickFormatter={(tick) => `$${tick.toLocaleString()}`} tick={{ fontSize: 14, fill: '#333' }} />
+              <Tooltip content={<ChartTooltipContent />} />
+              <Bar dataKey="averagePrice" fill="var(--color-desktop)" radius={8} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter className="flex-col items-start gap-2 text-sm">
+        <div className="leading-none text-muted-foreground">
+          Showing average price for product categories
+        </div>
+      </CardFooter>
+    </Card>
   );
 };
 
