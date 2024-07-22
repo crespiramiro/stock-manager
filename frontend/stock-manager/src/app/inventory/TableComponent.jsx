@@ -7,6 +7,7 @@ import { useProductActions } from "./assets/ProductActions";
 import { ModalComponent } from "./assets/ModalComponent";
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import DropdownC from "./assets/DropDownC";
+import apiUrl from "../../../api";
 
 
 const TableComponent = () => {
@@ -26,7 +27,7 @@ const TableComponent = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/api/products', {
+      const response = await fetch(`${apiUrl}/products`, {
         method: 'GET',
         headers: headers
       });
@@ -53,7 +54,7 @@ const TableComponent = () => {
 
   const refreshToken = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/refresh-token', {
+      const response = await fetch(`${apiUrl}/refresh-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

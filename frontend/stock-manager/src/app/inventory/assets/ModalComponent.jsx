@@ -2,6 +2,7 @@
 import {  useEffect } from 'react'
 import {  Modal, toast } from 'keep-react'
 import { useForm } from 'react-hook-form'
+import apiUrl from '../../../../api'
 
 
 export const ModalComponent = ({ product, onSave, onClose, isOpen }) => {
@@ -31,8 +32,8 @@ export const ModalComponent = ({ product, onSave, onClose, isOpen }) => {
     try {
       const method = product ? 'PUT' : 'POST';
       const url = product 
-        ? `http://localhost:8080/api/products/${product}`
-        : 'http://localhost:8080/api/products';
+        ? `${apiUrl}/products/${product}`
+        : `${apiUrl}/products`;
 
         const token = localStorage.getItem('token');
 

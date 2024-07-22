@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import apiUrl from "../../../../api";
 
 import {
   Card,
@@ -31,7 +32,7 @@ const AreaChartComponent = ({ token }) => {
           Authorization: `Bearer ${token}`,
         };
 
-        const response = await fetch("http://localhost:8080/api/products", {
+        const response = await fetch(`${apiUrl}/products`, {
           method: "GET",
           headers: headers,
         });

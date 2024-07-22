@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import {useForm} from "react-hook-form";
+import apiUrl from "../../../../api";
 
 export default function RegisterForm({ onSuccess }) {
 
@@ -10,7 +11,7 @@ export default function RegisterForm({ onSuccess }) {
   
   const onSubmit = async (data) => {
     try {
-        const response = await fetch('http://localhost:8080/api/auth/register', {
+        const response = await fetch(`${apiUrl}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { toast } from "keep-react";
+import apiUrl from "../../../../api";
 
 export const useProductActions = (getProducts) => {
   const [editingProduct, setEditingProduct] = useState(null);
@@ -13,8 +14,8 @@ export const useProductActions = (getProducts) => {
     try {
       const method = product ? 'PUT' : 'POST';
       const url = product 
-        ? `http://localhost:8080/api/products/${product._id}`
-        : 'http://localhost:8080/api/products';
+        ? `${apiUrl}/products/${product._id}`
+        : `${apiUrl}/products`;
 
         const token = localStorage.getItem('token');
       const response = await fetch(url, {
@@ -51,7 +52,7 @@ export const useProductActions = (getProducts) => {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/products/${id}`, {
+      const response = await fetch(`${apiUrl}/products/${id}`, {
         method: 'DELETE',
         headers: headers,
       });

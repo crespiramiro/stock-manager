@@ -3,6 +3,7 @@ import { useState, useEffect, lazy, Suspense } from "react";
 const ChartComponent2 = lazy(() => import('./assets/ChartComponent2'));
 const AreaChartComponent =lazy(() => import('./assets/AreaChartComponent'));
 import { useRouter } from 'next/navigation'
+import apiUrl from "../../../api";
 
 
 export default function Maincontent () {
@@ -11,7 +12,7 @@ export default function Maincontent () {
 
   const refreshToken = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/refresh-token', {
+      const response = await fetch(`${apiUrl}/refresh-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +36,7 @@ export default function Maincontent () {
   useEffect(() => {
     const handleTokenRefresh = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/products', {
+        const response = await fetch(`${apiUrl}/refresh-token`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
