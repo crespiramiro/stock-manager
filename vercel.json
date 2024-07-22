@@ -3,10 +3,7 @@
   "builds": [
     {
       "src": "frontend/stock-manager/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/stock-manager/build"
-      }
+      "use": "@vercel/next"
     },
     {
       "src": "backend/index.js",
