@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect, lazy, Suspense } from "react";
-import Topbar from "./Topbar";
 const ChartComponent2 = lazy(() => import('./assets/ChartComponent2'));
 const AreaChartComponent =lazy(() => import('./assets/AreaChartComponent'));
 import { useRouter } from 'next/navigation'
@@ -58,11 +57,7 @@ export default function Maincontent () {
 
 
     return (
-      <main className="w-full h-screen overflow-auto bg-white shadow-md">
-      <section className="topbar-container">
-        <Topbar />
-      </section>
-      <section className="content p-12 flex flex-col gap-y-8">
+      <main className="w-full h-screen p-12 flex flex-col gap-y-8 bg-white  ">
         <div className="total-products">
           <h2 className="text-3xl font-medium">Total Products</h2>
         </div>
@@ -78,7 +73,6 @@ export default function Maincontent () {
             </Suspense>
           </div>
         </article>
-      </section>
     </main>
     )
 }

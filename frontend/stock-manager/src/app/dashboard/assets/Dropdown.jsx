@@ -1,6 +1,14 @@
 'use client'
-import {  SignOut, UserCircle, Users } from 'phosphor-react'
+import {  CaretUp, SignOut, UserCircle, Users } from 'phosphor-react'
 import {  Dropdown } from 'keep-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { useRouter} from 'next/navigation'
 
 export const DropdownComponent = () => {
@@ -13,11 +21,16 @@ export const DropdownComponent = () => {
   }
 
   return (
-    <Dropdown>
-        <Dropdown.Item onClick={handleLogout} >
-          <SignOut size={20} />
-          Logout
-        </Dropdown.Item>
-    </Dropdown>
+    <DropdownMenu className="p-12" >
+      <DropdownMenuTrigger>
+        <CaretUp />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent side="top" className="side-top-class">
+        <DropdownMenuItem  className='cursor-pointer' onClick={handleLogout}>
+          <SignOut className="mr-2 h-4 w-4" />
+          <span className='font-semibold' >Log out</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

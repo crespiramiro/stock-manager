@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ArrowLeft, List, UserCircle, CaretUp } from "phosphor-react"
 import { useState, useEffect } from "react"
 import { jwtDecode } from "jwt-decode"
+import { DropdownComponent } from "./assets/Dropdown"
 
 export default function Slidebar (){
 
@@ -44,6 +45,7 @@ export default function Slidebar (){
                <h2 className="font-semibold text-lg " >Hi, {userName || 'User'}</h2>
                <h3 className=" text-md text-gray-500" >{userEmail || 'Mail' }</h3>
                </div>
+               <DropdownComponent />
                </div>
             </div>
         </section>
